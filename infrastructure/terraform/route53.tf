@@ -1,10 +1,9 @@
-data "aws_route53_zone" "origin" {
+resource "aws_route53_zone" "origin" {
   name         = "virtualmadden.dev."
-  private_zone = false
 }
 
 resource "aws_route53_record" "apex" {
-  zone_id = "${data.aws_route53_zone.origin.zone_id}"
+  zone_id = "${aws_route53_zone.origin.zone_id}"
 
   name    = "${var.domain}"
   type    = "A"
@@ -17,7 +16,7 @@ resource "aws_route53_record" "apex" {
 }
 
 resource "aws_route53_record" "www" {
-  zone_id = "${data.aws_route53_zone.origin.zone_id}"
+  zone_id = "${aws_route53_zone.origin.zone_id}"
 
   name    = "www.${var.domain}"
   type    = "A"
