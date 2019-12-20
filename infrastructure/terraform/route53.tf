@@ -3,7 +3,7 @@ resource "aws_route53_zone" "origin" {
 }
 
 resource "aws_route53_record" "apex" {
-  zone_id = "${data.aws_route53_zone.origin.zone_id}"
+  zone_id = "${aws_route53_zone.origin.zone_id}"
 
   name    = "${var.domain}"
   type    = "A"
