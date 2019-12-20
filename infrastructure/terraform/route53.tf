@@ -1,6 +1,5 @@
 resource "aws_route53_zone" "origin" {
   name         = "virtualmadden.dev."
-  private_zone = false
 }
 
 resource "aws_route53_record" "apex" {
