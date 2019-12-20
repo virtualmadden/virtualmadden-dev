@@ -16,6 +16,8 @@ resource "aws_cloudfront_distribution" "origin" {
       origin_access_identity = "${aws_cloudfront_origin_access_identity.origin.cloudfront_access_identity_path}"
     }
   }
+  
+  aliases = "$www.{var.domain}"
 
   default_cache_behavior {
     allowed_methods         = ["GET", "HEAD"]
