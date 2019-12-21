@@ -23,6 +23,7 @@ resource "aws_route53_record" "cert_validation" {
     "${aws_acm_certificate.cert.domain_validation_options.0.resource_record_value}"
   ]
   ttl     = 60
+  allow_overwrite = true
 }
 
 resource "aws_acm_certificate_validation" "cert" {
