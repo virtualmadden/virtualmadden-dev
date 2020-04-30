@@ -5,10 +5,10 @@
   "scripts": {
     "start": "npm-run-all build:stylus --parallel build:stylus:watch start:dev",
     "start:dev": "react-scripts start",
-    "build": "npm run build:stylus",
+    "build": "npm run build:stylus && react-scripts build",
     "build:stylus": "stylus src/stylus/app.styl -o src/index.css",
     "build:stylus:watch": "stylus -w src/stylus/app.styl -o src/index.css",
-    "style": "prettier  --write \"{src,test}/**/*.js\"",
+    "style": "prettier --write \"{src,test}/**/*.js\"",
     "lint": "eslint -c package.json src/**/*.js",
     "lint:fix": "eslint -c package.json --fix src/**/*.js",
     "check": "npm run style && npm run lint",
