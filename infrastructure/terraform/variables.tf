@@ -3,19 +3,31 @@ variable "region" {
 }
 
 provider "aws" {
-  region = "${var.region}"
+  region = var.region
 }
 
-variable "domain" {
-  default = "virtualmadden.dev"
+variable "app_namespace" {
+  default = "virtualmadden"
+}
+
+locals {
+  bucket_name = "${replace(var.app_namespace, "_", "-")}-${terraform.workspace}-client"
+  domain_name = "${var.app_namespace}.dev"
 }
 
 data "aws_caller_identity" "current" {}
 
 terraform {
   backend "s3" {
-    bucket               = "vrtlmdn-terraform-state"
-    key                  = "virtualmadden-dev"
-    region               = "us-west-2"
+    bucket  = "vrtlmdn-terraform-state"
+    key     = "virtualmadden-dev"
+    region  = "us-west-2"
+  }
+  required_version = ">= 0.13"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.14"
+    }
   }
 }

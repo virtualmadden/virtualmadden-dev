@@ -1,24 +1,16 @@
 resource "aws_s3_bucket_policy" "origin" {
-  bucket = "${aws_s3_bucket.origin.id}"
-  policy = "${data.aws_iam_policy_document.origin.json}"
+  bucket = aws_s3_bucket.origin.id
+  policy = data.aws_iam_policy_document.origin.json
 }
 
 data "aws_iam_policy_document" "origin" {
-  policy_id = "PolicyForCloudFrontPrivateContent"
   statement {
-    sid = "1"
-
-    actions = [
-      "s3:GetObject"
-    ]
-
-    resources = [
-      "${aws_s3_bucket.origin.arn}/*"
-    ]
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.origin.arn}/*"]
 
     principals {
       type        = "AWS"
-      identifiers = ["${aws_cloudfront_origin_access_identity.origin.iam_arn}"]
+      identifiers = [aws_cloudfront_origin_access_identity.origin.iam_arn]
     }
   }
 }
