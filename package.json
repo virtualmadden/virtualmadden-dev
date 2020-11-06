@@ -14,24 +14,27 @@
     "check": "npm run style && npm run lint",
     "test": "react-scripts test",
     "test:ci": "CI=true react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "sync:prod": "aws s3 sync build/ s3://virtualmadden.dev/ --exclude \"*.DS_Store*\"; exit_status=$?; if [ $exit_status -eq 2 ]; then exit 0; fi; exit $exit_status",
+    "cache-bust:prod": "aws s3 cp build/index.html s3://virtualmadden.dev/ --cache-control max-age=0",
+    "deploy:prod": "npm run sync:prod && npm run cache-bust:prod"
   },
   "dependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "^4.0.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.5.0",
-    "@testing-library/react": "^10.0.4",
-    "@testing-library/user-event": "^10.1.0",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.2.0",
-    "eslint-plugin-prettier": "^3.1.0",
+    "@testing-library/jest-dom": "^5.11.5",
+    "@testing-library/react": "^11.1.1",
+    "@testing-library/user-event": "^12.2.0",
+    "eslint": "^7.12.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.0.5",
-    "style-loader": "^1.2.1",
-    "stylus": "^0.54.7"
+    "prettier": "^2.1.2",
+    "style-loader": "^2.0.0",
+    "stylus": "^0.54.8"
   },
   "browserslist": {
     "production": [
