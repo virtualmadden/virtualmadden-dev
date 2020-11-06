@@ -17,7 +17,7 @@ locals {
 
 terraform {
   backend "s3" {
-    bucket  = "terraform-state-config"
+    bucket  = "vrtlmdn-terraform-state"
     key     = "virtualmadden-dev"
     region  = "us-west-2"
   }

@@ -2,7 +2,7 @@
 set -e
 
 WORKSPACE=${1-prod}
-terraform_state_bucket="terraform-state-config"
+terraform_state_bucket="vrtlmdn-terraform-state"
 
 pushd infrastructure/terraform
 terraform init \
