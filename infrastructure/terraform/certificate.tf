@@ -16,34 +16,26 @@ resource "aws_acm_certificate" "cert" {
 }
 
 resource "aws_route53_record" "cert_validation" {
-  name    = aws_acm_certificate.cert.domain_validation_options.0.resource_record_name
-  type    = aws_acm_certificate.cert.domain_validation_options.0.resource_record_type
-  zone_id = aws_route53_zone.origin.zone_id
-  records = [
-    aws_acm_certificate.cert.domain_validation_options.0.resource_record_value
-  ]
-  ttl     = 60
-  allow_overwrite = true
-}
+  for_each = {
+    for dvo in aws_acm_certificate.example.domain_validation_options : dvo.domain_name => {
+      name    = dvo.resource_record_name
+      type    = dvo.resource_record_type
+      zone_id = data.aws_route53_zone.origin.zone_id
+      record  = dvo.resource_record_value
+    }
+  }
 
-resource "aws_route53_record" "cert_validation_alt" {
-  name    = aws_acm_certificate.cert.domain_validation_options.1.resource_record_name
-  type    = aws_acm_certificate.cert.domain_validation_options.1.resource_record_type
-  zone_id = aws_route53_zone.origin.zone_id
-  records = [
-    aws_acm_certificate.cert.domain_validation_options.1.resource_record_value
-  ]
-  ttl     = 60
+  name            = each.value.name
+  records         = [each.value.record]
+  type            = each.value.type
+  zone_id         = each.value.zone_id
+  ttl             = 60
   allow_overwrite = true
 }
 
 resource "aws_acm_certificate_validation" "cert" {
-  certificate_arn = aws_acm_certificate.cert.arn
-
-  validation_record_fqdns = [
-    aws_route53_record.cert_validation.fqdn,
-    aws_route53_record.cert_validation_alt.fqdn
-  ]
+  certificate_arn         = aws_acm_certificate.example.arn
+  validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 
   provider = aws.certs
 }
