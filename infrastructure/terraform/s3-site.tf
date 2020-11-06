@@ -1,15 +1,3 @@
-data "aws_iam_policy_document" "origin" {
-  statement {
-    actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.origin.arn}/*"]
-
-    principals {
-      type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.origin.iam_arn]
-    }
-  }
-}
-
 resource "aws_cloudfront_origin_access_identity" "origin" {
   comment = local.domain_name
 }
