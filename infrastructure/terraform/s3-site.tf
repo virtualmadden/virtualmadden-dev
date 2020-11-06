@@ -5,7 +5,6 @@ resource "aws_cloudfront_origin_access_identity" "origin" {
 resource "aws_s3_bucket" "origin" {
   bucket = local.domain_name
   acl    = "private"
-  policy = data.aws_iam_policy_document.origin.json
 
   website {
     index_document = "index.html"
