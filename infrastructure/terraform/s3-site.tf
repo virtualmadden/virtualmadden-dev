@@ -49,7 +49,6 @@ resource "aws_cloudfront_distribution" "origin" {
     }
 
     target_origin_id  = "S3-${aws_s3_bucket.origin.id}"
-    path_pattern     = "/index.html"
 
     viewer_protocol_policy = "redirect-to-https"
     compress               = true
