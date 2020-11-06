@@ -20,7 +20,7 @@ resource "aws_route53_record" "cert_validation" {
     for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => {
       name    = dvo.resource_record_name
       type    = dvo.resource_record_type
-      zone_id = data.aws_route53_zone.origin.zone_id
+      zone_id = resource.aws_route53_zone.origin.zone_id
       record  = dvo.resource_record_value
     }
   }
