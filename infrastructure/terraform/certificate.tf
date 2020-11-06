@@ -12,7 +12,7 @@ resource "aws_acm_certificate" "cert" {
     create_before_destroy = true
   }
 
-  provider = "aws.certs"
+  provider = aws.certs
 }
 
 resource "aws_route53_record" "cert_validation" {

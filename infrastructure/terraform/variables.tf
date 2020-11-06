@@ -18,8 +18,8 @@ locals {
 terraform {
   backend "s3" {
     bucket  = "terraform-state-config"
-    key     = local.domain_name
-    region  = var.region
+    key     = "virtualmadden-dev"
+    region  = "us-west-2"
   }
   required_version = ">= 0.13"
   required_providers {
