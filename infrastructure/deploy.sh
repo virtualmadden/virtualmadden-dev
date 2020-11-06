@@ -2,7 +2,7 @@
 set -e
 
 WORKSPACE=${1-prod}
-terraform_state_bucket="terraform-remote-config-959783855993"
+terraform_state_bucket="terraform-state-config"
 
 pushd infrastructure/terraform
 terraform init \
