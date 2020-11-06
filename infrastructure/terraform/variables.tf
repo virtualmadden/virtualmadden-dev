@@ -15,6 +15,8 @@ locals {
   domain_name = "${var.app_namespace}.dev"
 }
 
+data "aws_caller_identity" "current" {}
+
 terraform {
   backend "s3" {
     bucket  = "vrtlmdn-terraform-state"

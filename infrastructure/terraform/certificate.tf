@@ -31,6 +31,7 @@ resource "aws_route53_record" "cert_validation" {
   zone_id         = each.value.zone_id
   ttl             = 60
   allow_overwrite = true
+  provider = aws.certs
 }
 
 resource "aws_acm_certificate_validation" "cert" {
