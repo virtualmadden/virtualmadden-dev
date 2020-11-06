@@ -45,5 +45,5 @@ resource "aws_acm_certificate_validation" "cert" {
     aws_route53_record.cert_validation_alt.fqdn
   ]
 
-  provider = "aws.certs"
+  provider = aws.certs
 }
