@@ -31,8 +31,8 @@ class AboutPage extends Component {
           </p>
         </div>
         <div className='date'>
-          <h5>{today.day}</h5>
-          <h6>{today.month}</h6>
+          <h5>{today.month}</h5>
+          <h6>{today.day}</h6>
         </div>
         <div className='social'>
           <ul>

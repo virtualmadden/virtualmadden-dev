@@ -7,10 +7,10 @@
     "start:dev": "react-scripts start",
     "build": "npm run build:stylus && react-scripts build",
     "build:stylus": "stylus src/stylus/app.styl -o src/index.css",
-    "build:stylus:watch": "stylus -w src/stylus/app.styl -o src/index.css",
-    "style": "prettier --write \"{src,test}/**/*.js\"",
-    "lint": "eslint -c package.json src/**/*.js",
-    "lint:fix": "eslint -c package.json --fix src/**/*.js",
+    "build:stylus:watch": "stylus --watch src/stylus/app.styl -o src/index.css",
+    "style": "prettier --write \"src/**/*.{js,jsx}\"",
+    "lint": "eslint -c package.json \"src/**/*.{js,jsx}\"",
+    "lint:fix": "eslint -c package.json --fix \"src/**/*.{js,jsx}\"",
     "check": "npm run style && npm run lint",
     "test": "react-scripts test",
     "test:ci": "CI=true react-scripts test --env=jsdom",
@@ -20,21 +20,24 @@
     "deploy:prod": "npm run sync:prod && npm run cache-bust:prod"
   },
   "dependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "^4.0.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^12.7.0",
-    "eslint": "^7.19.0",
-    "eslint-config-prettier": "^7.2.0",
-    "eslint-plugin-prettier": "^3.3.1",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "eslint": "^8.1.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.2.1",
-    "style-loader": "^2.0.0",
-    "stylus": "^0.54.8"
+    "prettier": "^3.8.3",
+    "style-loader": "^4.0.0",
+    "stylus": "^0.64.0",
+    "typescript": "^4.0.0",
+    "webpack": "^5.89.0"
   },
   "browserslist": {
     "production": [
@@ -85,5 +88,6 @@
     "singleQuote": true,
     "printWidth": 100,
     "jsxSingleQuote": true
-  }
+  },
+  "packageManager": "yarn@4.14.1+sha512.64df448055b2d37ba269d7db535a469b8da93f8ef1140c25fd7a83c00a8fbaacb214ca0e02553b92a2c54cef78bb67d0b4817fab02001df0e24fac0faccc3b42"
 }
