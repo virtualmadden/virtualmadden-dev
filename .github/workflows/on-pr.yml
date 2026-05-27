@@ -7,6 +7,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+      - name: Enable Corepack
+        run: corepack enable
       - name: Node Setup
         uses: actions/setup-node@main
         with:
@@ -15,6 +17,8 @@ jobs:
           corepack: true
       - name: Prepare Yarn
         run: corepack prepare yarn@4.15.0 --activate
+      - name: Verify Yarn version
+        run: which yarn && yarn -v
       - name: Install dependencies
         run: yarn install --immutable
       - name: Build
