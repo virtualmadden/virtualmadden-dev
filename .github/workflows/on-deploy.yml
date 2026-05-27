@@ -1,27 +1,30 @@
-name: Master Workflow
+name: Deploy to Production
 on:
   push:
     branches:
-    - master
+    - main
 jobs:
   build_and_test:
     name: Build and Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@main
       - name: Node Setup
-        uses: actions/setup-node@master
+        uses: actions/setup-node@main
         with:
-          node-version: '14.x'
-      - name: NPM Install
-        run: npm install
-      - name: NPM Build
-        run: npm run build
-      - name: NPM Test
-        run: npm run test:ci
+          node-version: '24.x'
+          cache: yarn
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Build
+        run: yarn build
+      - name: Test
+        run: yarn test:ci
       - name: Upload Artifacts
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@main
         with:
           name: build_artifacts
           path: './build'
@@ -31,31 +34,31 @@ jobs:
     needs: [build_and_test]
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@main
       - name: Download Artifacts
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@main
         with:
           name: build_artifacts
           path: './build'
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@master
+        uses: aws-actions/configure-aws-credentials@main
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
       - name: 'Terraform Initialize'
-        uses: hashicorp/terraform-github-actions@master
+        uses: hashicorp/terraform-github-actions@main
         with:
-          tf_actions_version: 0.14.6
+          tf_actions_version: 1.55.5
           tf_actions_subcommand: 'init'
           tf_actions_working_dir: './infrastructure/terraform'
           tf_actions_comment: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: 'Terraform Apply'
-        uses: hashicorp/terraform-github-actions@master
+        uses: hashicorp/terraform-github-actions@main
         with:
-          tf_actions_version: 0.14.6
+          tf_actions_version: 1.55.5
           tf_actions_subcommand: 'apply'
           tf_actions_working_dir: './infrastructure/terraform'
           tf_actions_comment: true
