@@ -43,7 +43,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@main
         with:
-          terraform_version: 1.55.5
+          terraform_version: 1.15.5
           cli_config_credentials_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Terraform Init
         run: terraform init
