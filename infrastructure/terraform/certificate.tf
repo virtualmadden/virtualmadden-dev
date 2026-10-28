@@ -33,4 +33,9 @@ resource "aws_acm_certificate_validation" "site" {
 
   certificate_arn         = aws_acm_certificate.site.arn
   validation_record_fqdns = [for record in aws_route53_record.certificate_validation : record.fqdn]
+
+  # Fail a deploy in minutes, not the 75m default, when delegation is missing.
+  timeouts {
+    create = "20m"
+  }
 }
