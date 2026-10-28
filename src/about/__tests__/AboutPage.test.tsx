@@ -35,16 +35,16 @@ describe('AboutPage Smoke Tests', () => {
     const { container } = render(<AboutPage />)
     const dateSection = container.querySelector('.date')
     expect(dateSection).toBeInTheDocument()
-    expect(dateSection.querySelector('h5')).toBeInTheDocument()
-    expect(dateSection.querySelector('h6')).toBeInTheDocument()
+    expect(dateSection?.querySelector('h5')).toBeInTheDocument()
+    expect(dateSection?.querySelector('h6')).toBeInTheDocument()
   })
 
   it('should render social icons list', () => {
     const { container } = render(<AboutPage />)
     const socialList = container.querySelector('.social ul')
     expect(socialList).toBeInTheDocument()
-    const socialItems = socialList.querySelectorAll('li')
-    expect(socialItems.length).toBe(3)
+    const socialItems = socialList?.querySelectorAll('li')
+    expect(socialItems?.length).toBe(3)
   })
 
   it('should render social icons with font awesome classes', () => {
