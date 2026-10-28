@@ -1,0 +1,38 @@
+name: Check
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Lint, test, build, validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - run: corepack enable
+
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24.x
+          cache: yarn
+
+      - run: yarn install --immutable
+      - run: yarn lint
+      - run: yarn test:ci
+      - run: yarn build
+
+      - uses: hashicorp/setup-terraform@v4.0.1
+        with:
+          terraform_version: 1.17.1
+          terraform_wrapper: false
+
+      - name: Terraform fmt and validate
+        working-directory: infrastructure/terraform
+        run: |
+          terraform fmt -check -recursive
+          terraform init -backend=false -input=false
+          terraform validate

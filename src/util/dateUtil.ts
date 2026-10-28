@@ -11,15 +11,13 @@ const MONTH_NAMES = [
   'October',
   'November',
   'December',
-]
+] as const
 
-const getMonthDay = () => {
-  let today = new Date()
+export const getMonthDay = () => {
+  const today = new Date()
 
   return {
     day: today.getDate(),
     month: MONTH_NAMES[today.getMonth()],
   }
 }
-
-export { getMonthDay }

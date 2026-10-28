@@ -1,6 +1,4 @@
-import React from 'react'
-
-import AboutPage from '../about/AboutPage.js'
+import AboutPage from './about/AboutPage'
 
 function App() {
   return (

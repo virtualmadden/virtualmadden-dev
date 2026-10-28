@@ -1,0 +1,20 @@
+name: Pull request
+
+on:
+  pull_request:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  check:
+    uses: ./.github/workflows/check.yml
+
+  # Forks and Dependabot get no OIDC token, so only this repo's own branches deploy to dev.
+  deploy:
+    needs: check
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: dev

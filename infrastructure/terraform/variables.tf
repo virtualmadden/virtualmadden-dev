@@ -1,33 +1,35 @@
-variable "region" {
-  default = "us-west-2"
+variable "environment" {
+  description = "dev or prod."
+  type        = string
+
+  validation {
+    condition     = contains(["dev", "prod"], var.environment)
+    error_message = "environment must be dev or prod."
+  }
 }
 
-provider "aws" {
-  region = var.region
+variable "account_id" {
+  description = "The environment's AWS account (aws-organization virtualmadden-dev-<env>). Applies to any other account are refused."
+  type        = string
 }
 
-variable "app_namespace" {
-  default = "virtualmadden"
+variable "domain_name" {
+  description = "Apex the site serves; www.<domain_name> redirects to the same distribution."
+  type        = string
+}
+
+variable "subdomain_delegations" {
+  description = "Child zones hosted in other accounts, keyed by subdomain label, valued by their nameservers. Used by prod to delegate dev.<domain_name>."
+  type        = map(list(string))
+  default     = {}
 }
 
 locals {
-  bucket_name = "${replace(var.app_namespace, "_", "-")}-${terraform.workspace}-client"
-  domain_name = "${var.app_namespace}.dev"
-}
+  aliases = [var.domain_name, "www.${var.domain_name}"]
 
-data "aws_caller_identity" "current" {}
-
-terraform {
-  backend "s3" {
-    bucket  = "vrtlmdn-terraform-state"
-    key     = "virtualmadden-dev"
-    region  = "us-west-2"
-  }
-  required_version = ">= 0.13"
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.14"
-    }
+  tags = {
+    Project     = "virtualmadden-dev"
+    Environment = var.environment
+    ManagedBy   = "virtualmadden-dev"
   }
 }
