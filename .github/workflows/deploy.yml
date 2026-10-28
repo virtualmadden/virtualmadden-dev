@@ -1,0 +1,80 @@
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: dev or prod
+        required: true
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy to ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-${{ inputs.environment }}
+      cancel-in-progress: false
+    env:
+      # github-deploy in virtualmadden-dev-<env> (aws-organization). Prod trusts only main.
+      AWS_ROLE_ARN: ${{ inputs.environment == 'prod' && 'arn:aws:iam::502869771296:role/github-deploy' || 'arn:aws:iam::757517308509:role/github-deploy' }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - run: corepack enable
+
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24.x
+          cache: yarn
+
+      - run: yarn install --immutable
+      - run: yarn build
+
+      - uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: us-west-2
+
+      - uses: hashicorp/setup-terraform@v4.0.1
+        with:
+          terraform_version: 1.17.1
+          terraform_wrapper: false
+
+      - name: Terraform apply
+        id: terraform
+        working-directory: infrastructure/terraform
+        run: |
+          terraform init -input=false -backend-config=env/${{ inputs.environment }}.s3.tfbackend
+          terraform apply -auto-approve -input=false -var-file=env/${{ inputs.environment }}.tfvars
+          echo "bucket=$(terraform output -raw site_bucket)" >> "$GITHUB_OUTPUT"
+          echo "distribution=$(terraform output -raw cloudfront_distribution_id)" >> "$GITHUB_OUTPUT"
+          echo "url=$(terraform output -raw url)" >> "$GITHUB_OUTPUT"
+
+      # Hashed assets are immutable; everything else (index.html, icons) revalidates.
+      # Old assets stay so open tabs keep working.
+      - name: Upload site
+        run: |
+          aws s3 sync dist/assets "s3://${{ steps.terraform.outputs.bucket }}/assets" \
+            --cache-control "public,max-age=31536000,immutable"
+          aws s3 sync dist "s3://${{ steps.terraform.outputs.bucket }}" \
+            --exclude "assets/*" --cache-control "no-cache" --delete
+
+      - name: Invalidate CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ steps.terraform.outputs.distribution }}" \
+            --paths "/*" --query Invalidation.Id --output text
+
+      - name: Smoke test
+        run: |
+          for i in $(seq 1 30); do
+            curl -fsS -o /dev/null "${{ steps.terraform.outputs.url }}" && exit 0
+            sleep 10
+          done
+          echo "${{ steps.terraform.outputs.url }} did not respond" >&2
+          exit 1
