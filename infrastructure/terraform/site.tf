@@ -66,8 +66,53 @@ data "aws_cloudfront_cache_policy" "caching_optimized" {
   name = "Managed-CachingOptimized"
 }
 
-data "aws_cloudfront_response_headers_policy" "security_headers" {
-  name = "Managed-SecurityHeadersPolicy"
+# The managed SecurityHeadersPolicy's headers, plus a CSP. The page loads nothing from
+# other origins and has no inline scripts or styles, so everything is limited to 'self'.
+# connect-src lets same-origin fetches (robots.txt, llms.txt) through for auditing tools.
+resource "aws_cloudfront_response_headers_policy" "security_headers" {
+  name = "virtualmadden-dev-security-headers"
+
+  security_headers_config {
+    content_security_policy {
+      content_security_policy = join("; ", [
+        "default-src 'none'",
+        "script-src 'self'",
+        "style-src 'self'",
+        "img-src 'self'",
+        "font-src 'self'",
+        "connect-src 'self'",
+        "base-uri 'none'",
+        "form-action 'none'",
+        "frame-ancestors 'none'",
+      ])
+      override = true
+    }
+
+    strict_transport_security {
+      access_control_max_age_sec = 31536000
+      override                   = true
+    }
+
+    content_type_options {
+      override = true
+    }
+
+    frame_options {
+      frame_option = "DENY"
+      override     = true
+    }
+
+    referrer_policy {
+      referrer_policy = "strict-origin-when-cross-origin"
+      override        = true
+    }
+
+    xss_protection {
+      protection = true
+      mode_block = true
+      override   = true
+    }
+  }
 }
 
 resource "aws_cloudfront_distribution" "site" {
@@ -92,19 +137,19 @@ resource "aws_cloudfront_distribution" "site" {
     viewer_protocol_policy     = "redirect-to-https"
     compress                   = true
     cache_policy_id            = data.aws_cloudfront_cache_policy.caching_optimized.id
-    response_headers_policy_id = data.aws_cloudfront_response_headers_policy.security_headers.id
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.security_headers.id
   }
 
-  # Single-page app: unknown paths render index.html. S3 answers missing keys with 403
-  # because CloudFront has no ListBucket.
+  # One page and no client routes, so unknown paths are real 404s. S3 answers missing
+  # keys with 403 because CloudFront has no ListBucket.
   dynamic "custom_error_response" {
     for_each = [403, 404]
 
     content {
       error_code            = custom_error_response.value
-      response_code         = 200
-      response_page_path    = "/index.html"
-      error_caching_min_ttl = 10
+      response_code         = 404
+      response_page_path    = "/404.html"
+      error_caching_min_ttl = 300
     }
   }
 
