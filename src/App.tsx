@@ -38,7 +38,7 @@ function App() {
                 {role.years && <span className='years'>{role.years}</span>}
               </div>
               <p className='role-title'>{role.title}</p>
-              <p>{role.story}</p>
+              {role.story && <p>{role.story}</p>}
             </li>
           ))}
         </ol>
