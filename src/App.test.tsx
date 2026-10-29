@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react'
 import App from './App'
-import { career, links, strengths } from './content'
+import { career, links, projects, strengths } from './content'
 
 describe('App', () => {
   it('introduces Jonathan', () => {
@@ -22,6 +22,15 @@ describe('App', () => {
     render(<App />)
     const section = screen.getByRole('region', { name: "Things I'm good at" })
     expect(within(section).getAllByRole('listitem')).toHaveLength(strengths.length)
+  })
+
+  it('lists personal projects, linking the ones with a repo', () => {
+    render(<App />)
+    const section = screen.getByRole('region', { name: 'Personal projects' })
+    expect(within(section).getAllByRole('listitem')).toHaveLength(projects.length)
+    for (const project of projects.filter((p) => p.href)) {
+      expect(within(section).getByRole('link', { name: project.name })).toHaveAttribute('href', project.href)
+    }
   })
 
   it('links out to every profile', () => {
