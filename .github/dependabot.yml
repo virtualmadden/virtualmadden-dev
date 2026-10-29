@@ -9,6 +9,10 @@ updates:
     groups:
       npm:
         patterns: ["*"]
+    ignore:
+      # Tracks the Node major CI runs (24.x in the workflows); bump both together.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: /
