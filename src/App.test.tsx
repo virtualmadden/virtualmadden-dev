@@ -1,12 +1,17 @@
 import { render, screen, within } from '@testing-library/react'
 import App from './App'
-import { career, links, projects, strengths } from './content'
+import { about, career, links, projects, strengths } from './content'
 
 describe('App', () => {
   it('introduces Jonathan', () => {
     render(<App />)
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent("Hi, I'm Jonathan.")
     expect(screen.getByRole('img')).toHaveAccessibleName(/bobblehead/i)
+  })
+
+  it('opens with an about paragraph', () => {
+    render(<App />)
+    expect(screen.getByRole('region', { name: 'About' })).toHaveTextContent(about)
   })
 
   it('lists every role in order', () => {

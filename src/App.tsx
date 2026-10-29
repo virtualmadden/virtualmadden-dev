@@ -1,5 +1,5 @@
 import headShot from './assets/headShot.jpeg'
-import { career, intro, links, projects, strengths } from './content'
+import { about, career, intro, links, projects, strengths } from './content'
 
 // Simple Icons (CC0), 24x24.
 const icons: Record<(typeof links)[number]['label'], string> = {
@@ -27,6 +27,10 @@ function App() {
           </p>
         </div>
       </header>
+
+      <section aria-label='About' className='about'>
+        <p>{about}</p>
+      </section>
 
       <section aria-labelledby='career'>
         <h2 id='career'>Career, abridged</h2>
