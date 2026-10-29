@@ -8,11 +8,16 @@ output "cloudfront_distribution_id" {
   value       = aws_cloudfront_distribution.site.id
 }
 
-output "name_servers" {
-  description = "Delegate the zone here: prod in dns-configuration, dev in prod's subdomain_delegations."
-  value       = aws_route53_zone.this.name_servers
+output "dns_records" {
+  description = "What this site needs in the shared virtualmadden.dev zone (dns-configuration): aliases for the apex and www, and the certificate's validation CNAMEs."
+  value = {
+    alias_target = aws_cloudfront_distribution.site.domain_name
+    certificate_validation = {
+      for dvo in aws_acm_certificate.site.domain_validation_options : dvo.resource_record_name => dvo.resource_record_value
+    }
+  }
 }
 
 output "url" {
-  value = "https://${var.domain_name}"
+  value = "https://${local.domain_name}"
 }

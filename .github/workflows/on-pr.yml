@@ -11,10 +11,30 @@ jobs:
   check:
     uses: ./.github/workflows/check.yml
 
-  # Forks and Dependabot get no OIDC token, so only this repo's own branches deploy to dev.
-  deploy:
+  # Shows what merging would change in prod. github-plan is read-only, so the plan runs
+  # without the state lock. Forks and Dependabot get no OIDC token and skip it.
+  plan:
+    name: Plan against prod
     needs: check
     if: github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
-    uses: ./.github/workflows/deploy.yml
-    with:
-      environment: dev
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      # github-plan in virtualmadden-dev-prod (aws-organization); trusts only pull requests.
+      - uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          role-to-assume: arn:aws:iam::502869771296:role/github-plan
+          aws-region: us-west-2
+
+      - uses: hashicorp/setup-terraform@v4.0.1
+        with:
+          terraform_version: 1.17.1
+          terraform_wrapper: false
+
+      - name: Terraform plan
+        working-directory: infrastructure/terraform
+        run: |
+          terraform init -input=false
+          terraform plan -input=false -no-color -lock=false | tee plan.txt
+          { echo '```'; cat plan.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"

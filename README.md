@@ -13,56 +13,53 @@ yarn test:ci
 yarn build      # dist/
 ```
 
-## Environments
+## Deploys
 
-Each environment is its own AWS account from [aws-organization](https://github.com/virtualmadden/aws-organization):
+The site runs in `virtualmadden-dev-prod` (502869771296), an account from [aws-organization](https://github.com/virtualmadden/aws-organization). There is no hosted dev environment; preview locally with `yarn build && yarn preview`.
 
-| Environment | Account | URL | Deploys on |
-| --- | --- | --- | --- |
-| prod | `virtualmadden-dev-prod` (502869771296) | https://virtualmadden.dev | push to `main` |
-| dev | `virtualmadden-dev-dev` (757517308509) | https://dev.virtualmadden.dev | pull requests from this repo's branches |
+| Event | Runs |
+| --- | --- |
+| Pull request | Lint, test and build; `terraform plan` against prod, shown in the run summary |
+| Push to `main` | The same checks, then a deploy to https://virtualmadden.dev |
 
-GitHub Actions assumes the account's `github-deploy` role over OIDC; there are no stored AWS keys. The prod role only trusts `main`. Forked and Dependabot PRs run checks but don't deploy.
+GitHub Actions uses OIDC; there are no stored AWS keys:
+- PRs assume `github-plan`, which is read-only, so a PR can't change prod.
+- `main` assumes `github-deploy`.
+
+Forked and Dependabot PRs run checks only.
 
 Each deploy:
 1. Builds the site.
-2. Applies [`infrastructure/terraform`](infrastructure/terraform) with `env/<env>.tfvars`. State is in the account's `tfstate-<account>-us-west-2` bucket.
+2. Applies [`infrastructure/terraform`](infrastructure/terraform). State is in `tfstate-502869771296-us-west-2`.
 3. Uploads `dist/` and invalidates CloudFront.
 
 ## Infrastructure
 
-Per environment:
-- A Route53 zone for the domain.
 - An ACM certificate.
 - A private S3 bucket.
-- A CloudFront distribution reaching the bucket through Origin Access Control, with A/AAAA aliases for the apex and `www`.
+- A CloudFront distribution reaching the bucket through Origin Access Control, serving the apex and `www`.
 
 Unknown paths serve `index.html`.
 
-DNS delegation:
-- **prod:** Porkbun points `virtualmadden.dev` at the prod zone through [dns-configuration](https://github.com/virtualmadden/dns-configuration)'s `project-domains.auto.tfvars`.
-- **dev:** the prod zone delegates `dev.virtualmadden.dev` to the dev zone through `subdomain_delegations` in [`env/prod.tfvars`](infrastructure/terraform/env/prod.tfvars).
+DNS lives in the shared `virtualmadden.dev` zone in [dns-configuration](https://github.com/virtualmadden/dns-configuration)'s `shared-records.auto.tfvars`:
+- aliases for the apex and `www`
+- the certificate's validation CNAMEs
 
-If either zone is recreated, its nameservers change and the matching entry must be updated.
+`terraform output dns_records` prints the values. They only change if the distribution or certificate is replaced, which a plan shows in advance; update dns-configuration before merging such a change.
 
 To run Terraform locally:
 
 ```sh
 aws sso login
-export AWS_PROFILE=virtualmadden-dev-prod   # or virtualmadden-dev-dev
+export AWS_PROFILE=virtualmadden-dev-prod
 cd infrastructure/terraform
-terraform init -reconfigure -backend-config=env/prod.s3.tfbackend
-terraform plan -var-file=env/prod.tfvars
+terraform init
+terraform plan
 ```
 
-### Standing up an environment from nothing
+### Standing up from nothing
 
-The certificate only validates once the zone is reachable, so a new zone has to be delegated before the full apply:
+The certificate validates only once its records are in the shared zone:
 
-1. **Create both zones:**
-   - prod: `terraform apply -var-file=env/prod.tfvars -target=aws_route53_zone.this`
-   - Then the same for dev with `env/dev.tfvars`.
-2. **Delegate them:**
-   - Add prod's `name_servers` output to dns-configuration and merge.
-   - Put dev's `name_servers` in `subdomain_delegations` in `env/prod.tfvars`.
-3. **Run a full `terraform apply`:** prod first, so dev's delegation exists, then dev.
+1. `terraform apply -target=aws_acm_certificate.site`, then add the `dns_records` validation CNAMEs to dns-configuration and merge.
+2. `terraform apply`, then add the alias records for the `alias_target` and merge.

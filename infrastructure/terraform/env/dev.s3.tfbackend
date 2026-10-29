@@ -1,5 +1,0 @@
-bucket       = "tfstate-757517308509-us-west-2"
-key          = "virtualmadden-dev/terraform.tfstate"
-region       = "us-west-2"
-encrypt      = true
-use_lockfile = true

@@ -1,6 +1,6 @@
 # Private bucket served only through CloudFront (Origin Access Control).
 resource "aws_s3_bucket" "site" {
-  bucket = "virtualmadden-dev-site-${var.account_id}"
+  bucket = "virtualmadden-dev-site-${local.account_id}"
 }
 
 resource "aws_s3_bucket_public_access_block" "site" {
@@ -77,7 +77,7 @@ resource "aws_cloudfront_distribution" "site" {
   price_class         = "PriceClass_100"
   default_root_object = "index.html"
   aliases             = local.aliases
-  comment             = var.domain_name
+  comment             = local.domain_name
 
   origin {
     origin_id                = "s3"
