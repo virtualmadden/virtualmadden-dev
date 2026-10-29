@@ -1,0 +1,27 @@
+# Weekly, one grouped PR per ecosystem. Dependabot PRs get no OIDC token, so they run
+# checks but skip the plan against prod.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      npm:
+        patterns: ["*"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
+
+  - package-ecosystem: terraform
+    directory: /infrastructure/terraform
+    schedule:
+      interval: weekly
+    groups:
+      terraform:
+        patterns: ["*"]
