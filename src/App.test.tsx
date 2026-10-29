@@ -40,8 +40,11 @@ describe('App', () => {
 
   it('links out to every profile', () => {
     render(<App />)
+    // Once in the header for skimmers, once in the footer for readers.
     for (const { label, href } of links) {
-      expect(screen.getByRole('link', { name: label })).toHaveAttribute('href', href)
+      const found = screen.getAllByRole('link', { name: label })
+      expect(found).toHaveLength(2)
+      for (const link of found) expect(link).toHaveAttribute('href', href)
     }
   })
 
