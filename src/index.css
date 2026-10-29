@@ -51,10 +51,12 @@ h3 {
   letter-spacing: -0.02em;
   line-height: 1.15;
   margin: 0;
+  text-wrap: balance;
 }
 
 p {
   margin: 0;
+  text-wrap: pretty;
 }
 
 a {
@@ -62,7 +64,7 @@ a {
 }
 
 .page {
-  max-width: 44rem;
+  max-width: 52rem;
   margin: 0 auto;
   padding: 3rem 1rem 2rem;
   display: grid;
@@ -95,8 +97,8 @@ h2 {
 }
 
 .portrait img {
-  width: 8.5rem;
-  height: 8.5rem;
+  width: 9.5rem;
+  height: 9.5rem;
   border-radius: 50%;
   object-fit: cover;
   object-position: 50% 30%;
@@ -109,8 +111,12 @@ h2 {
   font-size: 0.75rem;
   color: var(--muted);
   font-style: italic;
-  max-width: 10rem;
   text-align: center;
+}
+
+/* One phrase per line, never "bobblehead / edition." */
+.portrait figcaption span {
+  display: block;
 }
 
 .eyebrow {
@@ -155,14 +161,19 @@ h1 {
 
 @media (min-width: 40rem) {
   .page {
-    padding-top: 5rem;
-    gap: 4rem;
+    padding: 5rem 1.5rem 3rem;
+    gap: 4.5rem;
   }
 
   .hero {
     grid-template-columns: auto 1fr;
     align-items: center;
-    gap: 2.5rem;
+    gap: 3rem;
+  }
+
+  .portrait img {
+    width: 12rem;
+    height: 12rem;
   }
 }
 
