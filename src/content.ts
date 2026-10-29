@@ -5,6 +5,9 @@ export const intro = {
   status: 'Always looking for new adventures',
 }
 
+export const about =
+  "I've spent more than 15 years building software in Portland, most recently on the internal platforms Nike's engineers used to find documentation, ship services, and manage access. I care about the unglamorous parts done well: clear ownership, infrastructure as code, and automation that gives people their time back. My favorite work sits where product and engineering meet, talking with the people who use a tool and then making it better for them."
+
 export type Role = {
   company: string
   title: string
