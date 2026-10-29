@@ -1,5 +1,5 @@
 import headShot from './assets/headShot.jpeg'
-import { brewing, career, intro, links, strengths } from './content'
+import { career, intro, links, projects, strengths } from './content'
 
 // Simple Icons (CC0), 24x24.
 const icons: Record<(typeof links)[number]['label'], string> = {
@@ -53,9 +53,30 @@ function App() {
         </ul>
       </section>
 
-      <section aria-labelledby='brewing' className='brewing'>
-        <h2 id='brewing'>Currently brewing</h2>
-        <p>{brewing}</p>
+      <section aria-labelledby='projects'>
+        <h2 id='projects'>Personal projects</h2>
+        <ul className='projects'>
+          {projects.map((project) => (
+            <li key={project.name}>
+              <div className='project-heading'>
+                <h3>
+                  {project.href ? (
+                    <a href={project.href} rel='noopener' target='_blank'>
+                      {project.name}
+                      <span className='arrow' aria-hidden='true'>
+                        ↗
+                      </span>
+                    </a>
+                  ) : (
+                    project.name
+                  )}
+                </h3>
+                {project.status && <span className='tag'>{project.status}</span>}
+              </div>
+              <p>{project.blurb}</p>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <footer className='footer'>

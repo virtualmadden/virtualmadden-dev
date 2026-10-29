@@ -52,8 +52,36 @@ export const strengths = [
   'Mentoring, code review, and calm on\u2011call',
 ]
 
-export const brewing =
-  'Bringing my coffee journey to life, one cup and one commit at a time.'
+export type Project = {
+  name: string
+  blurb: string
+  href?: string
+  status?: string
+}
+
+export const projects: Project[] = [
+  {
+    name: 'Coffee Passport',
+    blurb: 'Bringing my coffee journey to life, one cup and one commit at a time.',
+    status: 'Brewing',
+  },
+  {
+    name: 'This site',
+    blurb:
+      'One page of HTML, served from its own AWS account in a multi-account organization, with DNS, CI, and deploys all in Terraform. Proportionate? No. Fun? Very.',
+    href: 'https://github.com/virtualmadden/virtualmadden-dev',
+  },
+  {
+    name: 'Chess engines',
+    blurb: 'A simple chess engine in Go, and before that a minichess player in Kotlin.',
+    href: 'https://github.com/virtualmadden/chess-engine-go',
+  },
+  {
+    name: 'Dotfiles',
+    blurb: 'My whole machine as Nix code, so a fresh laptop is one command away from feeling like home.',
+    href: 'https://github.com/virtualmadden/dotfiles',
+  },
+]
 
 export const links = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/virtualmadden' },
