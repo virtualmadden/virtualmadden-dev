@@ -8,13 +8,18 @@ terraform {
     }
   }
 
-  # Per-environment bucket: terraform init -backend-config=env/<env>.s3.tfbackend
-  backend "s3" {}
+  backend "s3" {
+    bucket       = "tfstate-502869771296-us-west-2"
+    key          = "virtualmadden-dev/terraform.tfstate"
+    region       = "us-west-2"
+    encrypt      = true
+    use_lockfile = true
+  }
 }
 
 provider "aws" {
   region              = "us-west-2"
-  allowed_account_ids = [var.account_id]
+  allowed_account_ids = [local.account_id]
 
   default_tags {
     tags = local.tags
@@ -25,7 +30,7 @@ provider "aws" {
 provider "aws" {
   alias               = "us_east_1"
   region              = "us-east-1"
-  allowed_account_ids = [var.account_id]
+  allowed_account_ids = [local.account_id]
 
   default_tags {
     tags = local.tags

@@ -16,5 +16,3 @@ jobs:
   deploy:
     needs: check
     uses: ./.github/workflows/deploy.yml
-    with:
-      environment: prod

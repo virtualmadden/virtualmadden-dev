@@ -1,8 +1,8 @@
 resource "aws_acm_certificate" "site" {
   provider = aws.us_east_1
 
-  domain_name               = var.domain_name
-  subject_alternative_names = ["www.${var.domain_name}"]
+  domain_name               = local.domain_name
+  subject_alternative_names = ["www.${local.domain_name}"]
   validation_method         = "DNS"
 
   lifecycle {
@@ -10,31 +10,14 @@ resource "aws_acm_certificate" "site" {
   }
 }
 
-resource "aws_route53_record" "certificate_validation" {
-  for_each = {
-    for dvo in aws_acm_certificate.site.domain_validation_options : dvo.domain_name => {
-      name   = dvo.resource_record_name
-      type   = dvo.resource_record_type
-      record = dvo.resource_record_value
-    }
-  }
-
-  zone_id         = aws_route53_zone.this.zone_id
-  name            = each.value.name
-  type            = each.value.type
-  ttl             = 60
-  records         = [each.value.record]
-  allow_overwrite = true
-}
-
-# Waits for ACM to see the validation records, so the zone must already be delegated.
+# The validation records live in the shared virtualmadden.dev zone (dns-configuration),
+# copied from the dns_records output. ACM renews against the same records.
 resource "aws_acm_certificate_validation" "site" {
   provider = aws.us_east_1
 
-  certificate_arn         = aws_acm_certificate.site.arn
-  validation_record_fqdns = [for record in aws_route53_record.certificate_validation : record.fqdn]
+  certificate_arn = aws_acm_certificate.site.arn
 
-  # Fail a deploy in minutes, not the 75m default, when delegation is missing.
+  # Fail a deploy in minutes, not the 75m default, when the records are missing.
   timeouts {
     create = "20m"
   }
