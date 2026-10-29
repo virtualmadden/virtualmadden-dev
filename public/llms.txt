@@ -1,0 +1,17 @@
+# Jonathan Madden
+
+> Senior full-stack engineer in Portland, OR, building developer platforms, infrastructure as code, and the automation around them.
+
+virtualmadden.dev is a single page: a short introduction, a career timeline, strengths, and personal projects.
+
+## Career
+
+- Nike, Senior Software Engineer (2018 - 2026): internal developer platforms for thousands of engineers, including the Backstage developer portal, documentation search, and the entitlements service.
+- InComm Digital Solutions, Software Engineer (2014 - 2018): a B2B and B2C gift card commerce platform, with a focus on order processing and payment integrations.
+- RMLS, QA Engineer, then Software Engineer (2010 - 2014).
+- Portland State University: BS Computer Science, BS Micro / Molecular Biology.
+
+## Links
+
+- [LinkedIn](https://www.linkedin.com/in/virtualmadden)
+- [GitHub](https://github.com/virtualmadden)

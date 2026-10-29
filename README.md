@@ -38,8 +38,9 @@ Each deploy:
 - An ACM certificate.
 - A private S3 bucket.
 - A CloudFront distribution reaching the bucket through Origin Access Control, serving the apex and `www`.
+- A response headers policy: HSTS, `X-Frame-Options: DENY`, and a strict Content Security Policy that only allows the site's own origin. The page loads nothing from other origins and has no inline scripts or styles; keep it that way, or the CSP in [`site.tf`](infrastructure/terraform/site.tf) must change with it.
 
-Unknown paths serve `index.html`.
+Unknown paths return a real 404 with [`public/404.html`](public/404.html).
 
 DNS lives in the shared `virtualmadden.dev` zone in [dns-configuration](https://github.com/virtualmadden/dns-configuration)'s `shared-records.auto.tfvars`:
 - aliases for the apex and `www`
