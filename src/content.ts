@@ -66,15 +66,17 @@ export const projects: Project[] = [
     status: 'Brewing',
   },
   {
-    name: 'This site',
+    name: 'Personal site',
     blurb:
-      'One page of HTML, served from its own AWS account in a multi-account organization, with DNS, CI, and deploys all in Terraform. Proportionate? No. Fun? Very.',
+      "The page you're reading, served from its own AWS account in a multi-account organization, with DNS, CI, and deploys all in Terraform. Proportionate? No. Fun? Very.",
     href: 'https://github.com/virtualmadden/virtualmadden-dev',
   },
   {
-    name: 'Chess engines',
-    blurb: 'A simple chess engine in Go, and before that a minichess player in Kotlin.',
-    href: 'https://github.com/virtualmadden/chess-engine-go',
+    name: 'gimme-aws-creds',
+    blurb:
+      'A from-scratch Rust CLI for AWS IAM Identity Center logins. It writes native SSO profiles, so the AWS CLI and SDKs find credentials on their own.',
+    href: 'https://github.com/virtualmadden/gimme-aws-creds',
+    status: 'In progress',
   },
   {
     name: 'Dotfiles',
