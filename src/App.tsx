@@ -15,7 +15,9 @@ function App() {
       <header className='hero'>
         <figure className='portrait'>
           <img src={headShot} alt='Bobblehead of Jonathan holding a golf club' width={160} height={170} />
-          <figcaption>Official likeness, bobblehead edition.</figcaption>
+          <figcaption>
+            <span>Official likeness,</span> <span>bobblehead edition.</span>
+          </figcaption>
         </figure>
         <div>
           <p className='eyebrow'>{intro.location}</p>
