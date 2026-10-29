@@ -138,20 +138,27 @@ h1 {
   color: var(--muted);
 }
 
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+/* Plain text, not a pill: only the links beside it should look clickable. */
 .status {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 1.25rem;
-  padding: 0.375rem 0.875rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--surface);
+  margin-right: 0.5rem;
   font-size: 0.875rem;
   font-weight: 500;
 }
 
+/* The 3px glow ring stays inside the text column. */
 .status-dot {
+  margin-left: 3px;
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
@@ -432,6 +439,29 @@ h3 {
   width: 1.125rem;
   height: 1.125rem;
   fill: currentColor;
+}
+
+/* Header copy: quieter outlined pills, so the footer stays the main call to action. */
+.links-compact {
+  gap: 0.5rem;
+}
+
+.links-compact a {
+  padding: 0.375rem 0.875rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.links-compact a:hover {
+  border-color: var(--accent);
+}
+
+.links-compact svg {
+  width: 0.9375rem;
+  height: 0.9375rem;
 }
 
 .fine-print {
