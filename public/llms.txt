@@ -15,3 +15,4 @@ virtualmadden.dev is a single page: a short introduction, a career timeline, str
 
 - [LinkedIn](https://www.linkedin.com/in/virtualmadden)
 - [GitHub](https://github.com/virtualmadden)
+- [Email](mailto:hello@virtualmadden.dev)
