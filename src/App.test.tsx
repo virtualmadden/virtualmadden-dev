@@ -48,8 +48,16 @@ describe('App', () => {
     }
   })
 
-  it('keeps contact details other than profile links off the page', () => {
+  it('offers only the site address for email, never a personal one', () => {
     const { container } = render(<App />)
-    expect(container.innerHTML).not.toMatch(/@gmail\.com|mailto:|tel:/)
+    expect(container.innerHTML).not.toMatch(/@gmail\.com|tel:/)
+    const mailto = [...container.querySelectorAll('a[href^="mailto:"]')].map((a) => a.getAttribute('href'))
+    expect(new Set(mailto)).toEqual(new Set(['mailto:hello@virtualmadden.dev']))
+  })
+
+  it('opens profiles in a new tab but leaves email to the mail app', () => {
+    render(<App />)
+    for (const link of screen.getAllByRole('link', { name: 'Email' })) expect(link).not.toHaveAttribute('target')
+    for (const link of screen.getAllByRole('link', { name: 'GitHub' })) expect(link).toHaveAttribute('target', '_blank')
   })
 })

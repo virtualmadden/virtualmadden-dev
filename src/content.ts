@@ -89,4 +89,5 @@ export const projects: Project[] = [
 export const links = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/virtualmadden' },
   { label: 'GitHub', href: 'https://github.com/virtualmadden' },
+  { label: 'Email', href: 'mailto:hello@virtualmadden.dev' },
 ] as const
