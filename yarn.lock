@@ -398,58 +398,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fallow-cli/darwin-arm64@npm:3.37.0":
-  version: 3.37.0
-  resolution: "@fallow-cli/darwin-arm64@npm:3.37.0"
+"@fallow-cli/darwin-arm64@npm:3.38.0":
+  version: 3.38.0
+  resolution: "@fallow-cli/darwin-arm64@npm:3.38.0"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@fallow-cli/darwin-x64@npm:3.37.0":
-  version: 3.37.0
-  resolution: "@fallow-cli/darwin-x64@npm:3.37.0"
+"@fallow-cli/darwin-x64@npm:3.38.0":
+  version: 3.38.0
+  resolution: "@fallow-cli/darwin-x64@npm:3.38.0"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@fallow-cli/linux-arm64-gnu@npm:3.37.0":
-  version: 3.37.0
-  resolution: "@fallow-cli/linux-arm64-gnu@npm:3.37.0"
+"@fallow-cli/linux-arm64-gnu@npm:3.38.0":
+  version: 3.38.0
+  resolution: "@fallow-cli/linux-arm64-gnu@npm:3.38.0"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@fallow-cli/linux-arm64-musl@npm:3.37.0":
-  version: 3.37.0
-  resolution: "@fallow-cli/linux-arm64-musl@npm:3.37.0"
+"@fallow-cli/linux-arm64-musl@npm:3.38.0":
+  version: 3.38.0
+  resolution: "@fallow-cli/linux-arm64-musl@npm:3.38.0"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@fallow-cli/linux-x64-gnu@npm:3.37.0":
-  version: 3.37.0
-  resolution: "@fallow-cli/linux-x64-gnu@npm:3.37.0"
+"@fallow-cli/linux-x64-gnu@npm:3.38.0":
+  version: 3.38.0
+  resolution: "@fallow-cli/linux-x64-gnu@npm:3.38.0"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@fallow-cli/linux-x64-musl@npm:3.37.0":
-  version: 3.37.0
-  resolution: "@fallow-cli/linux-x64-musl@npm:3.37.0"
+"@fallow-cli/linux-x64-musl@npm:3.38.0":
+  version: 3.38.0
+  resolution: "@fallow-cli/linux-x64-musl@npm:3.38.0"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@fallow-cli/win32-arm64-msvc@npm:3.37.0":
-  version: 3.37.0
-  resolution: "@fallow-cli/win32-arm64-msvc@npm:3.37.0"
+"@fallow-cli/win32-arm64-msvc@npm:3.38.0":
+  version: 3.38.0
+  resolution: "@fallow-cli/win32-arm64-msvc@npm:3.38.0"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@fallow-cli/win32-x64-msvc@npm:3.37.0":
-  version: 3.37.0
-  resolution: "@fallow-cli/win32-x64-msvc@npm:3.37.0"
+"@fallow-cli/win32-x64-msvc@npm:3.38.0":
+  version: 3.38.0
+  resolution: "@fallow-cli/win32-x64-msvc@npm:3.38.0"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -470,7 +470,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@humanfs/node@npm:^0.16.6":
+"@humanfs/node@npm:^0.16.8":
   version: 0.16.8
   resolution: "@humanfs/node@npm:0.16.8"
   dependencies:
@@ -1499,9 +1499,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^10.13.0":
-  version: 10.13.0
-  resolution: "eslint@npm:10.13.0"
+"eslint@npm:^10.14.0":
+  version: 10.14.0
+  resolution: "eslint@npm:10.14.0"
   dependencies:
     "@eslint-community/eslint-utils": "npm:^4.8.0"
     "@eslint-community/regexpp": "npm:^4.12.2"
@@ -1509,7 +1509,7 @@ __metadata:
     "@eslint/config-helpers": "npm:^0.7.0"
     "@eslint/core": "npm:^1.2.1"
     "@eslint/plugin-kit": "npm:^0.7.3"
-    "@humanfs/node": "npm:^0.16.6"
+    "@humanfs/node": "npm:^0.16.8"
     "@humanwhocodes/module-importer": "npm:^1.0.1"
     "@humanwhocodes/retry": "npm:^0.4.2"
     "@types/estree": "npm:^1.0.6"
@@ -1530,7 +1530,7 @@ __metadata:
     imurmurhash: "npm:^0.1.4"
     is-glob: "npm:^4.0.0"
     json-stable-stringify-without-jsonify: "npm:^1.0.1"
-    minimatch: "npm:^10.2.5"
+    minimatch: "npm:^10.2.6"
     natural-compare: "npm:^1.4.0"
     optionator: "npm:^0.9.3"
   peerDependencies:
@@ -1540,7 +1540,7 @@ __metadata:
       optional: true
   bin:
     eslint: bin/eslint.js
-  checksum: 10c0/4a28e85de458f13306d30f07df21b58109056bd8bd691b6158952d95e126cf742db2eb09562e3f1c1cc0154ee44dedc789f8ced8d0d8da48e82a689aa9cb1c0d
+  checksum: 10c0/738cdd0a1aa37b8bddefb5c89206f9f202540e8fce57f7ef82649b5bdf0acd67f7b9f2724f538b11149bd9bfdd14605125568cf73b319baec007866677af72dd
   languageName: node
   linkType: hard
 
@@ -1610,36 +1610,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fallow-type-aware@npm:3.37.0":
-  version: 3.37.0
-  resolution: "fallow-type-aware@npm:3.37.0"
+"fallow-type-aware@npm:3.38.0":
+  version: 3.38.0
+  resolution: "fallow-type-aware@npm:3.38.0"
   dependencies:
     typescript: "npm:7.0.2"
   peerDependencies:
-    tsrs: 0.18.0-ts7.1.0-dev.20260929
+    tsrs: "*"
   peerDependenciesMeta:
     tsrs:
       optional: true
   bin:
     fallow-type-aware: fallow-type-aware.mjs
-  checksum: 10c0/3226e9bb155136e83f7dcb06d7582a8e699a686c49e1146da625624e833fa146f3bf0c2b43c2e94fde4f972fb752a8ce0eb66ae31c9bdb623b188b4e5e7b0b4f
+  checksum: 10c0/398493f2d2871a30a9ff0e6e9f90d9ccfaf3a54994d2a118aee28e4d8f0a4a0645eedf37e87aff98aee6361b64a483fee1af99069fbd8f3491edf6631afe8cce
   languageName: node
   linkType: hard
 
-"fallow@npm:^3.37.0":
-  version: 3.37.0
-  resolution: "fallow@npm:3.37.0"
+"fallow@npm:^3.38.0":
+  version: 3.38.0
+  resolution: "fallow@npm:3.38.0"
   dependencies:
-    "@fallow-cli/darwin-arm64": "npm:3.37.0"
-    "@fallow-cli/darwin-x64": "npm:3.37.0"
-    "@fallow-cli/linux-arm64-gnu": "npm:3.37.0"
-    "@fallow-cli/linux-arm64-musl": "npm:3.37.0"
-    "@fallow-cli/linux-x64-gnu": "npm:3.37.0"
-    "@fallow-cli/linux-x64-musl": "npm:3.37.0"
-    "@fallow-cli/win32-arm64-msvc": "npm:3.37.0"
-    "@fallow-cli/win32-x64-msvc": "npm:3.37.0"
+    "@fallow-cli/darwin-arm64": "npm:3.38.0"
+    "@fallow-cli/darwin-x64": "npm:3.38.0"
+    "@fallow-cli/linux-arm64-gnu": "npm:3.38.0"
+    "@fallow-cli/linux-arm64-musl": "npm:3.38.0"
+    "@fallow-cli/linux-x64-gnu": "npm:3.38.0"
+    "@fallow-cli/linux-x64-musl": "npm:3.38.0"
+    "@fallow-cli/win32-arm64-msvc": "npm:3.38.0"
+    "@fallow-cli/win32-x64-msvc": "npm:3.38.0"
     detect-libc: "npm:2.1.2"
-    fallow-type-aware: "npm:3.37.0"
+    fallow-type-aware: "npm:3.38.0"
   dependenciesMeta:
     "@fallow-cli/darwin-arm64":
       optional: true
@@ -1663,7 +1663,7 @@ __metadata:
     fallow: bin/fallow
     fallow-lsp: bin/fallow-lsp
     fallow-mcp: bin/fallow-mcp
-  checksum: 10c0/77ec7614b740ab1c72016ecb6329ff3cb45bd63c36a83005f57dd01368e0727bc51a22cbace986402ca9e29411ed33fc755f0c44e20ace12111d6a19e3275cd9
+  checksum: 10c0/247f4dd273093c8633853d0c9f6e6684510ee38d573f173c52974ec94c0d1ea334d24ab330889ccb62406084dc672c8fc4d9476e384a118c4742cc5e595b7338
   languageName: node
   linkType: hard
 
@@ -2176,7 +2176,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^10.2.5":
+"minimatch@npm:^10.2.6":
   version: 10.2.6
   resolution: "minimatch@npm:10.2.6"
   dependencies:
@@ -2888,10 +2888,10 @@ __metadata:
     "@types/react": "npm:^19.3.0"
     "@types/react-dom": "npm:^19.3.0"
     "@vitejs/plugin-react": "npm:^6.1.2"
-    eslint: "npm:^10.13.0"
+    eslint: "npm:^10.14.0"
     eslint-plugin-react-hooks: "npm:^7.1.1"
     eslint-plugin-react-refresh: "npm:^0.5.7"
-    fallow: "npm:^3.37.0"
+    fallow: "npm:^3.38.0"
     globals: "npm:^17.13.0"
     jsdom: "npm:^30.1.3"
     react: "npm:^19.3.1"
