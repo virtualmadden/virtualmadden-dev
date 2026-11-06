@@ -1,5 +1,5 @@
 import headShot from './assets/headShot.jpeg'
-import { about, career, intro, links, projects, strengths } from './content'
+import { about, career, intro, links, projects, strengths, type Project } from './content'
 
 // LinkedIn and GitHub from Simple Icons (CC0), Email from Material Icons (Apache 2.0); all 24x24.
 const icons: Record<(typeof links)[number]['label'], string> = {
@@ -26,6 +26,15 @@ function Links({ compact = false }: { compact?: boolean }) {
       ))}
     </ul>
   )
+}
+
+/** A project's latest release version when it has one, otherwise its status. */
+function projectTag(project: Project): string | undefined {
+  return (project.href && __RELEASES__[project.href]) || project.status
+}
+
+function Tag({ text }: { text?: string }) {
+  return text ? <span className='tag'>{text}</span> : null
 }
 
 function App() {
@@ -99,7 +108,7 @@ function App() {
                     project.name
                   )}
                 </h3>
-                {project.status && <span className='tag'>{project.status}</span>}
+                <Tag text={projectTag(project)} />
               </div>
               <p>{project.blurb}</p>
             </li>

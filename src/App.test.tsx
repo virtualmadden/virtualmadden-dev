@@ -38,6 +38,15 @@ describe('App', () => {
     }
   })
 
+  it('tags a project with its latest release, or else its status', () => {
+    render(<App />)
+    const section = screen.getByRole('region', { name: 'Personal projects' })
+    const card = (name: string) => within(section).getByRole('heading', { name }).closest('li')!
+    expect(within(card('gac-redux')).getByText('v1.2.3')).toBeInTheDocument()
+    expect(within(card('gac-redux')).queryByText('Beta')).not.toBeInTheDocument()
+    expect(within(card('Coffee Passport')).getByText('Brewing')).toBeInTheDocument()
+  })
+
   it('links out to every profile', () => {
     render(<App />)
     // Once in the header for skimmers, once in the footer for readers.
