@@ -25,7 +25,10 @@ jobs:
           cache: yarn
 
       - run: yarn install --immutable
+      # The build reads each project's latest release from the GitHub API.
       - run: yarn build
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       # github-deploy in virtualmadden-dev-prod (aws-organization); trusts only main.
       - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
