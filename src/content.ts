@@ -62,27 +62,28 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    name: 'gac-redux',
+    blurb:
+      'A from-scratch Rust CLI for AWS IAM Identity Center logins. It writes native SSO profiles the AWS CLI and SDKs use on their own, and sets your default role from a list.',
+    href: 'https://github.com/virtualmadden/gac-redux',
+    status: 'Beta',
+  },
+  {
     name: 'Coffee Passport',
     blurb: 'Bringing my coffee journey to life, one cup and one commit at a time.',
     status: 'Brewing',
   },
   {
-    name: 'Personal site',
+    name: 'Lambda API template',
     blurb:
-      "The page you're reading, served from its own AWS account in a multi-account organization, with DNS, CI, and deploys all in Terraform. Proportionate? No. Fun? Very.",
-    href: 'https://github.com/virtualmadden/virtualmadden-dev',
+      'A GitHub template for a Node.js and TypeScript API on AWS Lambda behind API Gateway, with every AWS resource in Terraform and deploys from GitHub Actions over OIDC.',
+    href: 'https://github.com/virtualmadden/aws-lambda-terraform-api',
   },
   {
-    name: 'gimme-aws-creds',
+    name: 'React SPA template',
     blurb:
-      'A from-scratch Rust CLI for AWS IAM Identity Center logins. It writes native SSO profiles, so the AWS CLI and SDKs find credentials on their own.',
-    href: 'https://github.com/virtualmadden/gimme-aws-creds',
-    status: 'In progress',
-  },
-  {
-    name: 'Dotfiles',
-    blurb: 'My whole machine as Nix code, so a fresh laptop is one command away from feeling like home.',
-    href: 'https://github.com/virtualmadden/dotfiles',
+      'A GitHub template for a React and TypeScript single-page app on S3 and CloudFront, with the same Terraform and keyless GitHub Actions deploys.',
+    href: 'https://github.com/virtualmadden/aws-react-terraform-spa',
   },
 ]
 
