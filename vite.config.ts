@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { projects } from './src/content'
+import { imagetools } from 'vite-imagetools'
+import { projects } from './src/content.ts'
 
 type Release = { tag_name: string; draft: boolean }
 
@@ -33,7 +34,7 @@ async function latestReleases(): Promise<Record<string, string>> {
 
 // https://vite.dev/config/
 export default defineConfig(async ({ command }) => ({
-  plugins: [react()],
+  plugins: [react(), imagetools()],
   define: {
     __RELEASES__: JSON.stringify(command === 'build' ? await latestReleases() : {}),
   },

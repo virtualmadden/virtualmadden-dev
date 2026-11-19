@@ -9,6 +9,12 @@ describe('App', () => {
     expect(screen.getByRole('img')).toHaveAccessibleName(/bobblehead/i)
   })
 
+  it('offers the portrait as AVIF and WebP ahead of the JPEG fallback', () => {
+    render(<App />)
+    const types = [...screen.getByRole('img').parentElement!.querySelectorAll('source')].map((s) => s.type)
+    expect(types).toEqual(['image/avif', 'image/webp', 'image/jpeg'])
+  })
+
   it('opens with an about paragraph', () => {
     render(<App />)
     expect(screen.getByRole('region', { name: 'About' })).toHaveTextContent(about)
