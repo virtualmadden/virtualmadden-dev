@@ -1,4 +1,5 @@
-import headShot from './assets/headShot.jpeg'
+// 1x-3x of the portrait's 9.5rem phone and 12rem desktop sizes, in AVIF and WebP with a JPEG fallback.
+import headShot from './assets/headShot.jpeg?w=152;192;304;384;456;576&format=avif;webp;jpeg&as=picture'
 import { about, career, intro, links, projects, strengths, type Project } from './content'
 
 // LinkedIn and GitHub from Simple Icons (CC0), Email from Material Icons (Apache 2.0); all 24x24.
@@ -28,6 +29,9 @@ function Links({ compact = false }: { compact?: boolean }) {
   )
 }
 
+// Mirrors the .portrait img widths in index.css.
+const portraitSizes = '(min-width: 40rem) 12rem, 9.5rem'
+
 /** A project's latest release version when it has one, otherwise its status. */
 function projectTag(project: Project): string | undefined {
   return (project.href && __RELEASES__[project.href]) || project.status
@@ -42,7 +46,17 @@ function App() {
     <main className='page'>
       <header className='hero'>
         <figure className='portrait'>
-          <img src={headShot} alt='Bobblehead of Jonathan holding a golf club' width={160} height={170} />
+          <picture>
+            {Object.entries(headShot.sources).map(([format, srcSet]) => (
+              <source key={format} type={`image/${format}`} srcSet={srcSet} sizes={portraitSizes} />
+            ))}
+            <img
+              src={headShot.img.src}
+              alt='Bobblehead of Jonathan holding a golf club'
+              width={headShot.img.w}
+              height={headShot.img.h}
+            />
+          </picture>
           <figcaption>
             <span>Official likeness,</span> <span>bobblehead edition.</span>
           </figcaption>

@@ -34,6 +34,7 @@
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.72.2",
     "vite": "^8.3.8",
+    "vite-imagetools": "^12.0.2",
     "vitest": "^5.1.0"
   },
   "packageManager": "yarn@4.18.1",
