@@ -22,17 +22,18 @@ describe('App', () => {
 
   it('lists every role in order', () => {
     render(<App />)
-    const section = screen.getByRole('region', { name: 'Career, abridged' })
-    const companies = within(section)
+    const timeline = screen.getByRole('list', { name: 'Career, abridged' })
+    const companies = within(timeline)
       .getAllByRole('heading', { level: 3 })
       .map((heading) => heading.textContent)
     expect(companies).toEqual(career.map((role) => role.company))
   })
 
-  it('lists strengths', () => {
+  it('closes the career story with strengths', () => {
     render(<App />)
-    const section = screen.getByRole('region', { name: "Things I'm good at" })
-    expect(within(section).getAllByRole('listitem')).toHaveLength(strengths.length)
+    const career = screen.getByRole('region', { name: 'Career, abridged' })
+    const list = within(career).getByRole('list', { name: 'Along the way, I got good at' })
+    expect(within(list).getAllByRole('listitem').map((item) => item.textContent)).toEqual(strengths)
   })
 
   it('lists personal projects, linking the ones with a repo', () => {
@@ -53,13 +54,12 @@ describe('App', () => {
     expect(within(card('Coffee Passport')).getByText('Brewing')).toBeInTheDocument()
   })
 
-  it('links out to every profile', () => {
+  it('links out to every profile once, from the header', () => {
     render(<App />)
-    // Once in the header for skimmers, once in the footer for readers.
+    const header = screen.getByRole('banner')
     for (const { label, href } of links) {
-      const found = screen.getAllByRole('link', { name: label })
-      expect(found).toHaveLength(2)
-      for (const link of found) expect(link).toHaveAttribute('href', href)
+      expect(screen.getAllByRole('link', { name: label })).toHaveLength(1)
+      expect(within(header).getByRole('link', { name: label })).toHaveAttribute('href', href)
     }
   })
 
