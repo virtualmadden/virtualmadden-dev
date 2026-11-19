@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { imagetools } from 'vite-imagetools'
-import { projects } from './src/content'
+import { projects } from './src/content.ts'
 
 type Release = { tag_name: string; draft: boolean }
 
