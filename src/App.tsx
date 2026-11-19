@@ -1,5 +1,5 @@
-// 1x-3x of the portrait's 9.5rem phone and 12rem desktop sizes, in AVIF and WebP with a JPEG fallback.
-import headShot from './assets/headShot.jpeg?w=152;192;304;384;456;576&format=avif;webp;jpeg&as=picture'
+// 1x-3x of the portrait's 6rem phone and 12rem desktop sizes, in AVIF and WebP with a JPEG fallback.
+import headShot from './assets/headShot.jpeg?w=96;192;288;384;576&format=avif;webp;jpeg&as=picture'
 import { about, career, intro, links, projects, strengths, type Project } from './content'
 
 // LinkedIn and GitHub from Simple Icons (CC0), Email from Material Icons (Apache 2.0); all 24x24.
@@ -11,9 +11,9 @@ const icons: Record<(typeof links)[number]['label'], string> = {
   Email: 'M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z',
 }
 
-function Links({ compact = false }: { compact?: boolean }) {
+function Links() {
   return (
-    <ul className={compact ? 'links links-compact' : 'links'}>
+    <ul className='links'>
       {links.map(({ label, href }) => (
         <li key={label}>
           {/* Profiles open in a new tab; mailto: hands off to the mail app instead. */}
@@ -30,7 +30,7 @@ function Links({ compact = false }: { compact?: boolean }) {
 }
 
 // Mirrors the .portrait img widths in index.css.
-const portraitSizes = '(min-width: 40rem) 12rem, 9.5rem'
+const portraitSizes = '(min-width: 40rem) 12rem, 6rem'
 
 /** A project's latest release version when it has one, otherwise its status. */
 function projectTag(project: Project): string | undefined {
@@ -44,44 +44,47 @@ function Tag({ text }: { text?: string }) {
 function App() {
   return (
     <main className='page'>
-      <header className='hero'>
-        <figure className='portrait'>
-          <picture>
-            {Object.entries(headShot.sources).map(([format, srcSet]) => (
-              <source key={format} type={`image/${format}`} srcSet={srcSet} sizes={portraitSizes} />
-            ))}
-            <img
-              src={headShot.img.src}
-              alt='Bobblehead of Jonathan holding a golf club'
-              width={headShot.img.w}
-              height={headShot.img.h}
-            />
-          </picture>
-          <figcaption>
-            <span>Official likeness,</span> <span>bobblehead edition.</span>
-          </figcaption>
-        </figure>
-        <div>
-          <p className='eyebrow'>{intro.location}</p>
-          <h1>{intro.greeting}</h1>
-          <p className='lead'>{intro.lead}</p>
-          <div className='hero-actions'>
-            <p className='status'>
-              <span className='status-dot' aria-hidden='true' />
-              {intro.status}
-            </p>
-            <Links compact />
+      {/* The hero and about paragraph read as one introduction, so they sit closer than other sections. */}
+      <div className='intro'>
+        <header className='hero'>
+          <figure className='portrait'>
+            <picture>
+              {Object.entries(headShot.sources).map(([format, srcSet]) => (
+                <source key={format} type={`image/${format}`} srcSet={srcSet} sizes={portraitSizes} />
+              ))}
+              <img
+                src={headShot.img.src}
+                alt='Bobblehead of Jonathan holding a golf club'
+                width={headShot.img.w}
+                height={headShot.img.h}
+              />
+            </picture>
+            <figcaption>
+              <span>Official likeness,</span> <span>bobblehead edition.</span>
+            </figcaption>
+          </figure>
+          <div className='hero-text'>
+            <p className='eyebrow'>{intro.location}</p>
+            <h1>{intro.greeting}</h1>
+            <p className='lead'>{intro.lead}</p>
+            <div className='hero-actions'>
+              <p className='status'>
+                <span className='status-dot' aria-hidden='true' />
+                {intro.status}
+              </p>
+              <Links />
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <section aria-label='About' className='about'>
-        <p>{about}</p>
-      </section>
+        <section aria-label='About' className='about'>
+          <p>{about}</p>
+        </section>
+      </div>
 
       <section aria-labelledby='career'>
         <h2 id='career'>Career, abridged</h2>
-        <ol className='timeline'>
+        <ol className='timeline' aria-labelledby='career'>
           {career.map((role) => (
             <li key={role.company}>
               <div className='role-heading'>
@@ -93,15 +96,14 @@ function App() {
             </li>
           ))}
         </ol>
-      </section>
-
-      <section aria-labelledby='strengths'>
-        <h2 id='strengths'>Things I'm good at</h2>
-        <ul className='strengths'>
-          {strengths.map((strength) => (
-            <li key={strength}>{strength}</li>
-          ))}
-        </ul>
+        <div className='strengths'>
+          <h3 id='strengths'>Along the way, I got good at</h3>
+          <ul aria-labelledby='strengths'>
+            {strengths.map((strength) => (
+              <li key={strength}>{strength}</li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       <section aria-labelledby='projects'>
@@ -131,9 +133,6 @@ function App() {
       </section>
 
       <footer className='footer'>
-        <h2>Say hi</h2>
-        <p>Email or LinkedIn both reach me, and I reply faster than a CloudFront deploy.</p>
-        <Links />
         <p className='fine-print'>
           © {new Date().getFullYear()} Jonathan Madden. Deployed with more Terraform than strictly
           necessary.
