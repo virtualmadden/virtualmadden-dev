@@ -46,7 +46,7 @@ jobs:
         working-directory: infrastructure/terraform
         run: |
           terraform init -input=false
-          terraform apply -auto-approve -input=false
+          terraform apply -no-color -auto-approve -input=false
           {
             echo "bucket=$(terraform output -raw site_bucket)"
             echo "distribution=$(terraform output -raw cloudfront_distribution_id)"

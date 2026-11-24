@@ -36,6 +36,8 @@ jobs:
 
       - name: Terraform plan
         working-directory: infrastructure/terraform
+        # Explicit bash adds -o pipefail, so a failed plan piped through tee fails the step.
+        shell: bash
         run: |
           terraform init -input=false
           terraform plan -input=false -no-color -lock=false | tee plan.txt
