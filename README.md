@@ -21,12 +21,13 @@ The site runs in `virtualmadden-dev-prod` (502869771296), an account from [aws-o
 | --- | --- |
 | Pull request | Lint, test and build; `terraform plan` against prod, shown in the run summary |
 | Push to `main` | The same checks, then a deploy to https://virtualmadden.dev |
+| Nightly (09:17 UTC) or run by hand | The same as a push to `main`, so the site picks up new release tags from the projects |
 
 GitHub Actions uses OIDC; there are no stored AWS keys:
 - PRs assume `github-plan`, which is read-only, so a PR can't change prod.
 - `main` assumes `github-deploy`.
 
-Forked and Dependabot PRs run checks only.
+Forked and Dependabot PRs run checks only, so merging a Dependabot PR deploys it with no plan anyone has reviewed. Plan its branch locally first, read-only and without taking the state lock: check out the branch, then follow [running Terraform locally](#running-terraform-locally) with `terraform plan -lock=false`.
 
 Each deploy:
 1. Builds the site.
@@ -48,7 +49,7 @@ DNS lives in the shared `virtualmadden.dev` zone in [dns-configuration](https://
 
 `terraform output dns_records` prints the values. They only change if the distribution or certificate is replaced, which a plan shows in advance; update dns-configuration before merging such a change.
 
-To run Terraform locally:
+### Running Terraform locally
 
 ```sh
 aws sso login
