@@ -20,7 +20,7 @@ The site runs in `virtualmadden-dev-prod` (502869771296), an account from [aws-o
 | Event | Runs |
 | --- | --- |
 | Pull request | Lint, test and build; `terraform plan` against prod, shown in the run summary |
-| Push to `main` | The same checks, then a deploy to https://virtualmadden.dev |
+| Push to `main`, unless it only changes Markdown | The same checks, then a deploy to https://virtualmadden.dev |
 | Nightly (09:17 UTC) or run by hand | The same as a push to `main`, so the site picks up new release tags from the projects |
 
 GitHub Actions uses OIDC; there are no stored AWS keys:
